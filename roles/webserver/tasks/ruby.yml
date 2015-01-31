@@ -3,7 +3,7 @@
 - name: upgrade
   action: apt update_cache=yes upgrade=yes
 
-- name: install ruby dependencies 
+- name: install ruby dependencies
   action: apt pkg={{item}} state=installed
   with_items:
     - build-essential
@@ -25,7 +25,7 @@
     - libxslt1-dev
     - curl
 
-- name: Install app dependencies 
+- name: Install app dependencies
   action: apt pkg={{item}} state=installed
   with_items:
     - libpq-dev
@@ -37,7 +37,7 @@
 - name: ruby-from-src | ensure directory temporary ruby download directory is present
   file: state=directory path={{rubyTmpDir}}
 
-- name: ruby-from-src | Download ruby source 
+- name: ruby-from-src | Download ruby source
   get_url: url={{rubyUrl}} dest={{rubyTmpDir}}
 
 - name: ruby-from-src | ensure ruby is extracted
