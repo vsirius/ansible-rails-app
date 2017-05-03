@@ -4,10 +4,11 @@
 - authorized_key: user=deploy key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
 - name: Create deployment directory
-  file: path={{deploy_directory}} owner=deploy group=deploy state=directory
+  file: path={{deploy_directory}} owner=deploy group=deploy state=directory 
+  tags: shared
 
 - name: Make shared directories
-  file: path={{deploy_directory}}/shared/{{item}} group=deploy owner=deploy state=directory
+  file: path={{deploy_directory}}/shared/{{item}} group=deploy owner=deploy state=directory 
   with_items:
     - tmp
     - log
@@ -18,5 +19,10 @@
     - config/puma
   tags: shared
 
+- name: Make accesable directories
+  file: path={{deploy_directory}}/shared mode=777 recurse=yes
+
 - name: Install database.yml
   template: src=database.yml.j2 dest={{deploy_directory}}/shared/config/database.yml force=yes mode=755 owner=deploy
+  tags: shared
+

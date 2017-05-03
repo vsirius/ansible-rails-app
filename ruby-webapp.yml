@@ -1,6 +1,12 @@
 ---
 - hosts: all
-  user: root
+  user: ununtu
+  sudo: True
+  gather_facts: no
+  pre_tasks:
+  - name: "FIX: Ubuntu 16.04 LTS doesn't come with certain modules, required by ansible"
+    raw: apt-get install python-minimal aptitude -y
+
   vars_files:
     - vars/defaults.yml
 
